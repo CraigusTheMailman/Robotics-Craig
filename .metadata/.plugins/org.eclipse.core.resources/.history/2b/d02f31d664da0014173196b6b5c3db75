@@ -1,0 +1,57 @@
+package me.Craig.robotics.listener;
+
+import me.Craig.robotics.Robotics;
+
+import org.bukkit.ChatColor;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+public class ClickListener implements Listener {
+
+	@EventHandler
+	public void onCLick(InventoryClickEvent event) {
+		HumanEntity entity = event.getWhoClicked();
+		if(entity instanceof Player) {
+			Player player = (Player)entity;
+			
+			if(event.getInventory().getName().equals(Robotics.getInventory().getName())) {
+				ItemStack clicked = event.getCurrentItem();
+				if(clicked != null) {
+					if(clicked.getItemMeta().getDisplayName().equals("Humaniod Mode")) {
+						player.getActivePotionEffects().clear();
+						player.closeInventory();
+						player.sendMessage(ChatColor.BLUE + "Humaniod Mode Selected!");
+					}else if(clicked.getItemMeta().getDisplayName().equals("Tank Mode")) {
+						player.getActivePotionEffects().clear();
+						player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000000, 2));
+						player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1000000, 3));
+						player.sendMessage(ChatColor.BLUE + "Tank Mode Selected!");
+					}else if(clicked.getItemMeta().getDisplayName().equals("Sniper Mode")) {
+						player.getActivePotionEffects().clear();
+						player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000000, 10));
+						player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1000000, 3));
+						player.sendMessage(ChatColor.BLUE + "Sniper Mode Selected!");
+					}else if(clicked.getItemMeta().getDisplayName().equals("Drone Mode")) {
+						player.getActivePotionEffects().clear();
+						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 7));
+						player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 1000000, 20));
+						player.sendMessage(ChatColor.BLUE + "Drone Mode Selected!");
+					}else if(clicked.getItemMeta().getDisplayName().equals("Berserker Mode")) {
+						player.getActivePotionEffects().clear();
+						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 2));
+						player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1000000, 1));
+						player.sendMessage(ChatColor.BLUE + "Humaniod Mode Selected!");
+					}
+				}
+				
+				event.setCancelled(true);
+			}
+		}
+	}
+}

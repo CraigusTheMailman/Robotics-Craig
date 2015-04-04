@@ -1,0 +1,7 @@
+package me.Craig.robotics;
+
+import org.bukkit.event.Listener;
+
+public class ClickListener implements Listener {
+
+}
